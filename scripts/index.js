@@ -21,6 +21,7 @@ btn.addEventListener('click', function(){
         current+=1;
     }else{
         document.getElementById('fire').style.display = 'block';
+        document.getElementById('effect').style.display = 'block';
         document.getElementById('banner').style.backgroundColor = '#7c6b6c';
     }
 });

@@ -53,7 +53,6 @@ html, body{
 }
 
 #fire{
-    background-size: stretch;
     position: absolute;
     right: 0;
     bottom: 10%;
@@ -63,6 +62,20 @@ html, body{
     display: none;
     animation: fire 5s infinite alternate;
     padding: 0;
+}
+
+#effect{
+    position: absolute;
+    right: 3%;
+    bottom: 5%;
+    z-index: 9; 
+    height: 80%;
+    width: 10%;
+    display: none;
+    animation: fire 2s infinite alternate;
+    padding: 0;
+    animation-delay: .3s;
+    opacity: .2;
 }
 
 @keyframes gallop{
@@ -79,17 +92,22 @@ html, body{
 @keyframes fire{
     0%{
         transform: translate(0%, -15%) ;
+        opacity: 1;
     }
     25%{
         transform: translate(0%, -10%);
+        opacity: .33;
     }
     50%{
         transform: translate(0%, -15%);
+        opacity: .5;
     }
     75%{
         transform: translate(0%, -10%);
+        opacity: .33;
     }
     100%{
         transform: translate(0%, -15% );
+        opacity: .5;
     }
 }
