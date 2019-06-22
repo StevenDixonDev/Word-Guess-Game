@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Bree+Serif&display=swap');
+
 html, body{
     margin: 0;
     padding: 0;
@@ -6,10 +8,30 @@ html, body{
     overflow-x: hidden;
 }
 
+#title{
+    font-family: 'Bree Serif', serif;
+    color: rgb(255, 255, 85);
+    text-shadow: 1px 1px 3px #000;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    text-align: center;
+}
+
+#title h1 {
+    font-size: 1.8rem;
+    border-bottom: 2px solid rgb(116, 49, 49);
+}
+
+#title h2 {
+    font-size: 1.5rem;
+    
+}
+
 #banner{
     height: 40vh;
     width: 100%;
-    background-color: rgb(161, 186, 255);
+    background-color: #a1baff;
     position: relative;
 }
 
@@ -42,7 +64,7 @@ html, body{
 
 #knight{
     background-size: stretch;
-    width: 10%;
+    width: 20%;
     height: 40%;
     position: absolute;
     left: 0;
@@ -88,7 +110,6 @@ html, body{
 }
 
 
-
 @keyframes fire{
     0%{
         transform: translate(0%, -15%) ;
@@ -114,4 +135,56 @@ html, body{
 
 #game-area{
     background-color: rgb(57, 155, 114);
+    display: flex;
+    justify-content: center;
+}
+
+.question-wrapper{
+    width: 70%;
+    background-color: #ddd;
+    height: 100%;
+    display: flex;
+    flex-direction:column;
+    
+    align-items: center;
+    text-align: center;
+}
+
+.monty-text{
+    font-family: 'Bree Serif', serif;
+    color: rgb(255, 255, 85);
+    text-shadow: 1px 1px 3px #000;
+}
+
+.text-lg{
+    font-size: 1.5rem;
+}
+
+.wins{
+    margin: .5em;
+}
+
+.word-wrapper{
+    font-size: 3em;
+    margin: .5em;
+    letter-spacing: 5px;
+}
+
+#word-location{
+    margin-top: 1em;
+}
+
+.guesses-wrapper{
+    
+    text-align: center;
+}
+
+.guessed-wrapper{
+    margin: 1em auto;
+}
+
+#player-guess{
+    margin: 1em;
+    letter-spacing: 5px;
+    font-size: 1.2rem;
 }
