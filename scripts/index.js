@@ -25,3 +25,26 @@ btn.addEventListener('click', function(){
         document.getElementById('banner').style.backgroundColor = '#7c6b6c';
     }
 });
+
+let currentWord = '';
+
+const wordList = [
+    {word: 'King Arthur', image: "", tune: ""},
+    {word: 'The Black Knight', image: "", tune: ""},
+    {word: 'Sir Lancelot', image: "", tune: ""},
+    {word: 'Ni!', image: "", tune: ""},
+    {word: 'The Holy Hand Grenade', image:"", tune: ""},
+    {word: 'A shruberry', image: "", tune: ""},
+    {word: 'Just a flesh wound', image:"", tune: ""},
+    {word: 'A HERRING!', image: "", tune: ""},
+    {word: 'A newt?', image: "", tune: ""},
+    {word: 'With more Witches!', image: "", tune: ""},
+    {word: 'A Duck!', image: "", tune: ""},
+    {word: 'Sir Robin', image: "", tune: ""},
+    {word: 'Camelot', image: "", tune: ""},
+    {word: 'I seek the Grail', images: "", tune: ""},
+    {word: 'Tim', images: "", tune: ""},
+    {word: 'The French', image: "", tune: ""},
+    {word: 'Caerbannog', image: "", tune: ""},
+    
+];
