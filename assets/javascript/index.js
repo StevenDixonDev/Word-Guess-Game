@@ -38,6 +38,7 @@ const Game = {
     guessed: [],
     fireState: false,
     wins: 0,
+    gameState: 'playing',
     createKnightLocations: function () {
         // resets the knight location array if this function is called because of resize
         if (this.knightLocation.length > 1) {
@@ -80,6 +81,7 @@ const Game = {
     },
     init: function (reset) {
         // clear variable
+        this.gameState = 'playing';
         this.guessed = [];
         this.knightCurrent = 0;
         // Get the guessable word
@@ -101,7 +103,7 @@ const Game = {
         if (e.key === '-'){
             this.startOver();
         }
-        if (/[a-z]/.test(e.key) && e.key.length === 1) {
+        if (/[a-z]/.test(e.key) && e.key.length === 1 && this.gameState === 'playing') {
             this.checkGuesses(e.key);
         }
     },
@@ -113,19 +115,16 @@ const Game = {
     checkGuesses(guess){
         // check if the user already guessed the letter
         if(!this.guessed.includes(guess)){
-            console.log(guess)
             // check if the current work contains that letter
             if(!this.currentWord.word.toUpperCase().includes(guess.toUpperCase())){
                 // handle wrong
                 //push the guess in to the guess letter array
-                console.log('wrong');
                 this.guessed.push(guess);
                 this.moveKnights();
                 if(this.knightCurrent >= this.incorrectAnswerLimit){
                     this.handleLose();
                 }
             }else{
-                console.log('right');
                 // handle right
                 this.replaceUnderScores(guess.toUpperCase())
                 this.updateWord();
@@ -168,7 +167,6 @@ const Game = {
     createEmptyWord(word){
         let secret = ''
         word.split('').forEach(function(letter){
-            console.log(letter)
             if(letter.match(/[\w]/) !== null){
                 secret += '_';
             }else{
@@ -179,10 +177,12 @@ const Game = {
         return secret;
     },
     handleLose(){
-        console.log('you lose')
+        console.log('you lose');
+        this.gameState = 'lose'
     },
     handleWin(){
         console.log('you win');
+        this.gameState = 'win';
     },
     startOver(){
         this.init();
