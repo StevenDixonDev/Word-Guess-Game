@@ -1,3 +1,4 @@
+// setup audio for hoofbeats
 const audio = new Audio('./assets/audio/hoofs.mp3');
 audio.volume = .03;
 
@@ -18,11 +19,12 @@ const wordList = [
     { word: 'Camelot', image: "camelot.gif", hint: "It is a funny place, maybe we shouldn't go there." },
     { word: 'I seek the Grail', image: "grail.gif", hint: "What is your quest" },
     { word: 'Tim', image: "tim.gif", hint: "Some people call me..." },
-    { word: 'The French', image: "french.gif", hint: "Go and boil your bottoms, you sono f a silly person!" },
+    { word: 'The French', image: "french.gif", hint: "Go and boil your bottoms, you son of a silly person!" },
     { word: 'Caerbannog', image: "rabbit.gif", hint: "What behind the rabit?" },
-    { word: 'Lady of the lake', image: "tart.gif", hint: "Some watery tart" }git
+    { word: 'Lady of the lake', image: "tart.gif", hint: "Some watery tart" },
 ];
 
+// images to be used for losers
 const losingImages = [
     "sad.gif", "loser.gif", "fart.gif"
 ]
@@ -65,6 +67,7 @@ const Game = {
     moveKnights: function () {
         // updates the knights location
         if (this.knightCurrent < this.incorrectAnswerLimit - 1) {
+            // increase the knights position inside the position array;
             this.knightCurrent += 1;
             //check if audio is playing when the knights move
             if (this.audioState === false) {
@@ -96,11 +99,6 @@ const Game = {
             this.checkGuesses(e.key);
         }
     },
-    updateGuesses() {
-        //sets the number of guesses on the screen
-        document.querySelector('#guess-location').innerHTML = this.incorrectAnswerLimit - this.guessed.length;
-        document.querySelector('#player-guess').innerHTML = this.guessed;
-    },
     checkGuesses(guess) {
         // check if the user already guessed the letter
         if (!this.guessed.includes(guess)) {
@@ -109,16 +107,22 @@ const Game = {
                 // handle wrong
                 //push the guess in to the guess letter array
                 if (this.knightCurrent < this.incorrectAnswerLimit - 1) {
+                    // add the users guess to the guessed array
                     this.guessed.push(guess);
+                    // move the knights
                     this.moveKnights();
                 } else {
+                    // set the fire on 
                     this.toggleFire(true);
+                    // handles the loss
                     this.handleLose();
                 }
             } else {
                 // handle right guess
                 this.replaceUnderScores(guess.toUpperCase())
+                // check if the hidden word does not have a _
                 if (!this.hiddenWord.includes('_')) {
+                    // handles the win
                     this.handleWin();
                 }
             }
@@ -129,6 +133,7 @@ const Game = {
     replaceUnderScores(letter) {
         //find all occurences of the letter in the word and replace the _
         let indices = [];
+        // loop through current word and get the indices 
         for (let i in this.currentWord.word) {
             if (this.currentWord.word[i].toUpperCase() === letter) {
                 indices.push(Number(i));
@@ -141,10 +146,6 @@ const Game = {
                 return letter;
             }
         }).join("");
-    },
-    updateWord() {
-        const wordLocation = document.querySelector('#word-location');
-        wordLocation.innerHTML = this.hiddenWord;
     },
     setGuessWord() {
         //get the location to display the word
@@ -172,11 +173,6 @@ const Game = {
         this.hiddenWord = secret;
         return secret;
     },
-    closeModals() {
-        //close modals on the screen
-        document.querySelector('#lose-modal').style.display = 'none';
-        document.querySelector('#win-modal').style.display = 'none';
-    },
     handleLose() {
         // change the gamestate so players cannot enter more characters
         this.gameState = 'lose';
@@ -188,7 +184,7 @@ const Game = {
         this.wins += 1;
     },
     startOver() {
-        // short cut to call init
+        // short cut to call init with true so that event handlers are not redefined
         this.init(true);
     },
     init: function (reset) {
@@ -223,6 +219,12 @@ const Game = {
         this.updateGuesses();
         this.updateWord()
         this.setKnightScreenLocation();
+        if(this.incorrectAnswerLimit - this.guessed.length < 3){
+            document.querySelector('#hint').innerHTML = `<p>Hint: ${this.currentWord.hint}</p>`;
+            document.querySelector('#hint').style.display = 'block';
+        }else{
+            document.querySelector('#hint').style.display = 'none';
+        }
         if(this.gameState === 'playing'){
             this.closeModals();
         }
@@ -246,7 +248,20 @@ const Game = {
             document.getElementById('effect').style.display = 'none';
             document.getElementById('banner').style.backgroundColor = '#a1baff';
         }
-    }
+    },
+    updateWord() {
+        document.querySelector('#word-location').innerHTML = this.hiddenWord;
+    },
+    closeModals() {
+        //close modals on the screen
+        document.querySelector('#lose-modal').style.display = 'none';
+        document.querySelector('#win-modal').style.display = 'none';
+    },
+    updateGuesses() {
+        //sets the number of guesses on the screen
+        document.querySelector('#guess-location').innerHTML = this.incorrectAnswerLimit - this.guessed.length;
+        document.querySelector('#player-guess').innerHTML = this.guessed;
+    },
 }
 
 //start the game
