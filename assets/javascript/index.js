@@ -43,8 +43,11 @@ const Game = {
     wordList,
     // array of words guessed by player
     guessed: [],
+    // the state of the fire sprite
     fireState: false,
+    // how many wins the user has
     wins: 0,
+    // status of the game
     gameState: 'playing',
     //keep track if the audio is playing so that we dont play to many sounds
     audioState: false,
@@ -58,8 +61,6 @@ const Game = {
         for (let i = 0; i < this.incorrectAnswerLimit - 1; i++) {
             this.knightLocation.push(Math.floor(window.innerWidth / (this.incorrectAnswerLimit - 1)) + this.knightLocation[i] - document.getElementById('knight').offsetWidth / 5);
         }
-        //sets the knight location in case the knights location actually is different
-        this.setKnightScreenLocation();
     },
     moveKnights: function () {
         // updates the knights location
@@ -74,10 +75,7 @@ const Game = {
                     this.audioState = false;
                 });
             }
-
         }
-        // set the knights location on screen 
-        this.setKnightScreenLocation();
     },
     setKnightScreenLocation() {
         // sets the knights location on screen
@@ -86,44 +84,6 @@ const Game = {
     //toggles the fire on and off
     toggleFire(state) {
         this.fireState = state;
-        if (this.fireState) {
-            document.getElementById('fire').style.display = 'block';
-            document.getElementById('effect').style.display = 'block';
-            document.getElementById('banner').style.backgroundColor = '#7c6b6c';
-        } else {
-            document.getElementById('fire').style.display = 'none';
-            document.getElementById('effect').style.display = 'none';
-            document.getElementById('banner').style.backgroundColor = '#a1baff';
-        }
-    },
-    init: function (reset) {
-        // clear variable
-        this.closeModals();
-        this.gameState = 'playing';
-        // set the guessed array to 0
-        this.guessed = [];
-        // set the knight location back to 0
-        this.knightCurrent = 0;
-        // Get the guessable word
-        this.setGuessWord();
-        // Create the location where the knights will be displayed
-        this.createKnightLocations();
-        // Write the number of guess left and how many on the screen
-        this.updateGuesses()
-        // turn the fire off :)
-        this.toggleFire(false);
-        // create an event listener to listen for key presses
-        if (!reset) {
-            document.querySelector('body').addEventListener('keyup', this.handleInput.bind(this));
-            // create an event listener to check for a screen resize
-            window.onresize = this.createKnightLocations.bind(this);
-            // set the start over buttons to allow the player to start over
-            document.querySelectorAll('.play-again').forEach((element) => {
-                element.addEventListener('click', () => {
-                    this.startOver();
-                })
-            })
-        }
     },
     handleInput(e) {
         // reset cheat code
@@ -158,13 +118,12 @@ const Game = {
             } else {
                 // handle right guess
                 this.replaceUnderScores(guess.toUpperCase())
-                this.updateWord();
                 if (!this.hiddenWord.includes('_')) {
                     this.handleWin();
                 }
             }
             // update guesses on the screen
-            this.updateGuesses();
+            this.render();
         }
     },
     replaceUnderScores(letter) {
@@ -214,31 +173,82 @@ const Game = {
         return secret;
     },
     closeModals() {
+        //close modals on the screen
         document.querySelector('#lose-modal').style.display = 'none';
         document.querySelector('#win-modal').style.display = 'none';
     },
     handleLose() {
         // change the gamestate so players cannot enter more characters
         this.gameState = 'lose';
-        document.querySelector('#lose-img').src = `./assets/images/${losingImages[Math.floor(Math.random()*(losingImages.length))]}`;
-        document.querySelector('#lose-modal').style.display = 'flex';
-
+        this.wins = 0;
     },
     handleWin() {
         // change the gamestate so players cannot enter more characters
         this.gameState = 'win';
         this.wins += 1;
-        document.querySelector('#wins').innerHTML = `Wins: ${this.wins}`;
-        document.querySelector("#correct-word").innerHTML = this.currentWord.word;
-        document.querySelector('#win-img').src = `./assets/images/${this.currentWord.image}`;
-        document.querySelector('#win-modal').style.display = 'flex';
     },
     startOver() {
         // short cut to call init
         this.init(true);
+    },
+    init: function (reset) {
+        // clear variable
+        this.closeModals();
+        this.gameState = 'playing';
+        // set the guessed array to 0
+        this.guessed = [];
+        // set the knight location back to 0
+        this.knightCurrent = 0;
+        // Get the guessable word
+        this.setGuessWord();
+        // Create the location where the knights will be displayed
+        this.createKnightLocations();
+        // turn the fire off :)
+        this.toggleFire(false);
+        // render all dom changes
+        this.render()
+        // create an event listener to listen for key presses
+        if (!reset) {
+            document.querySelector('body').addEventListener('keyup', this.handleInput.bind(this));
+            // create an event listener to check for a screen resize
+            window.onresize = this.createKnightLocations.bind(this);
+            // set the start over buttons to allow the player to start over
+            document.querySelectorAll('.play-again').forEach((element) => {
+                element.addEventListener('click', () => {
+                    this.startOver();
+                })
+            })
+        }
+    },
+    render(){
+        this.updateGuesses();
+        this.updateWord()
+        this.setKnightScreenLocation();
+        if(this.gameState === 'playing'){
+            this.closeModals();
+        }
+        else if(this.gameState === 'win'){
+            document.querySelector('#wins').innerHTML = `Wins: ${this.wins}`;
+            document.querySelector("#correct-word").innerHTML = this.currentWord.word;
+            document.querySelector('#win-img').src = `./assets/images/${this.currentWord.image}`;
+            document.querySelector('#win-modal').style.display = 'flex';
+        }
+        else if(this.gameState === 'lose'){
+            document.querySelector('#wins').innerHTML = `Wins: ${this.wins}`;
+            document.querySelector('#lose-img').src = `./assets/images/${losingImages[Math.floor(Math.random() * (losingImages.length))]}`;
+            document.querySelector('#lose-modal').style.display = 'flex';
+        }
+        if (this.fireState) {
+            document.getElementById('fire').style.display = 'block';
+            document.getElementById('effect').style.display = 'block';
+            document.getElementById('banner').style.backgroundColor = '#7c6b6c';
+        } else {
+            document.getElementById('fire').style.display = 'none';
+            document.getElementById('effect').style.display = 'none';
+            document.getElementById('banner').style.backgroundColor = '#a1baff';
+        }
     }
 }
-
 
 //start the game
 Game.init();
