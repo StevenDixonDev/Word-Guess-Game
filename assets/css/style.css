@@ -193,7 +193,7 @@ html, body{
 .modal{
     display: none;
     width: 50%;
-    height: 60%;
+    height: 70%;
     background-color: rgb(146, 134, 134);
     position: absolute;
     top: 50%;
@@ -221,7 +221,7 @@ html, body{
 
 .modal img{
     width: 80%;
-    height: 60%;
+    height: 70%;
     padding: .5em;
 }
 
@@ -229,9 +229,8 @@ html, body{
     color: white;
     background-color: rgb(58, 70, 66);
     border: 0px solid transparent;
-    padding: .2em;
-    height: 20%;
-    width: 20%;
+    padding: 1em ;
+    width: 40%;
     font-weight: 600;
     border-radius: 5px;
 }

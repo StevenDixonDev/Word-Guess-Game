@@ -16,15 +16,15 @@ const wordList = [
     { word: 'A Duck!', image: "duck.gif", hint: "What floats on water?" },
     { word: 'Sir Robin', image: "sir-robin.gif", hint: "He's not very brave is he?" },
     { word: 'Camelot', image: "camelot.gif", hint: "It is a funny place, maybe we shouldn't go there." },
-    { word: 'I seek the Grail', images: "grail.gif", hint: "What is your quest" },
-    { word: 'Tim', images: "tim.gif", hint: "Some people call me..." },
+    { word: 'I seek the Grail', image: "grail.gif", hint: "What is your quest" },
+    { word: 'Tim', image: "tim.gif", hint: "Some people call me..." },
     { word: 'The French', image: "french.gif", hint: "Go and boil your bottoms, you sono f a silly person!" },
     { word: 'Caerbannog', image: "rabbit.gif", hint: "What behind the rabit?" },
     { word: 'Lady of the lake', image: "tart.gif", hint: "Some watery tart" }
 ];
 
 const losingImages = [
-    "sad.gif", "loser.gif"
+    "sad.gif", "loser.gif", "fart.gif"
 ]
 
 //create a game object
@@ -220,7 +220,7 @@ const Game = {
     handleLose() {
         // change the gamestate so players cannot enter more characters
         this.gameState = 'lose';
-        document.querySelector('#lose-img').src = `./assets/images/${losingImages[Math.round(Math.random())]}`;
+        document.querySelector('#lose-img').src = `./assets/images/${losingImages[Math.floor(Math.random()*(losingImages.length))]}`;
         document.querySelector('#lose-modal').style.display = 'flex';
 
     },
