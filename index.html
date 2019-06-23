@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Guess A Word</title>
+    <title>Guess the Word</title>
     <link rel="shortcut icon" type="image/png" href="./assets/images/arthur-icon.png" />
     <link rel="stylesheet" href="./assets/css/reset.css" />
     <link rel='stylesheet' href="./assets/css/style.css" />
@@ -25,7 +25,7 @@
     <section id="game-area">
         <!-- where the game will show the letters -->
         <div class="question-wrapper">
-            <h2 class="monty-text text-lg wins">Wins: 0</h2>
+            <h2 class="monty-text text-lg wins" id="wins">Wins: 0</h2>
             <div class="word-wrapper">
                 <h2 class="monty-text text-lg">Type a letter to Start</h2>
                 <p id="word-location">_ _ _ _ _ _ _ _</p>
@@ -39,11 +39,16 @@
                 <div id="player-guess" ></div>
             </div>
         </div>
-        <div id="win-modal">
-            
+        <div id="win-modal" class="modal">
+            <h1 class="monty-text">You win!</h1>
+            <img id="win-img" src=""/>
+            <h2 class="monty-text" id="correct-word"></h2>
+            <button class="button play-again">Play again?</button>
         </div>
-        <div id="lose-modal">
-
+        <div id="lose-modal" class="modal">
+            <h1 class="monty-text">You lost!</h1>
+            <img id="lose-img" src=""/>
+            <button class="button play-again">Play again?</button>
         </div>
     </section>
     <script src="./assets/javascript/index.js"></script>
