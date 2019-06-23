@@ -20,7 +20,7 @@ const wordList = [
     { word: 'Tim', image: "tim.gif", hint: "Some people call me..." },
     { word: 'The French', image: "french.gif", hint: "Go and boil your bottoms, you sono f a silly person!" },
     { word: 'Caerbannog', image: "rabbit.gif", hint: "What behind the rabit?" },
-    { word: 'Lady of the lake', image: "tart.gif", hint: "Some watery tart" }
+    { word: 'Lady of the lake', image: "tart.gif", hint: "Some watery tart" }git
 ];
 
 const losingImages = [
@@ -193,7 +193,6 @@ const Game = {
     },
     init: function (reset) {
         // clear variable
-        this.closeModals();
         this.gameState = 'playing';
         // set the guessed array to 0
         this.guessed = [];
