@@ -75,6 +75,7 @@ const Game = {
                 this.audioState = true;
                 // then play the audio
                 audio.play().then(() => {
+                    // once the audio is done playing set the audio state to false
                     this.audioState = false;
                 });
             }
